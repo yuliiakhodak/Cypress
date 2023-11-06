@@ -36,43 +36,39 @@ describe("Project - Form Elements", () => {
         name: "Address",
         placeholder: "Enter your address"
     }
-
-    it('Validate the Address input box', () => {
-        cy.visit("https://techglobal-training.com/frontend/project-1")
-        cy.get(".field").contains(obj1.name).should("have.text", obj1.name)
-        cy.get(".field").contains(obj1.name).next().find("input")
-            .should("be.visible").and("have.attr", "placeholder", obj1.placeholder).and("have.not.attr", "required")
-    })
     const obj2 = {
         name: "Email *",
         placeholder: "Enter your email"
     }
-    it('Validate the Email input box', () => {
-        cy.visit("https://techglobal-training.com/frontend/project-1")
-        cy.get(".field").contains(obj2.name).should("have.text", obj2.name)
-        cy.get(".field").contains(obj2.name).next().find("input")
-            .should("be.visible").and("have.attr", "placeholder", obj2.placeholder).and("have.attr", "required")
-    })
     const obj3 = {
         name: "Phone",
         placeholder: "Enter your phone number"
     }
-    it('Validate the Phone input box', () => {
-        cy.visit("https://techglobal-training.com/frontend/project-1")
-        cy.get(".field").contains(obj3.name).should("have.text", obj3.name)
-        cy.get(".field").contains(obj3.name).next().find("input")
-            .should("be.visible").and("have.attr", "placeholder", obj3.placeholder).and("have.not.attr", "required")
-    })
     const obj4 = {
         name: "Message",
         placeholder: "Type your message here..."
     }
-    it('Validate the Message text area', () => {
+
+    const allInfo = [obj1, obj2, obj3, obj4]
+
+    it("Validate the Address input box and Phone input box and the Message text area and Email input box'", () => {
+
         cy.visit("https://techglobal-training.com/frontend/project-1")
-        cy.get(".field").contains(obj4.name).should("have.text", obj4.name)
-        cy.get(".field").contains(obj4.name).next().find("textarea")
-            .should("be.visible").and("have.attr", "placeholder", obj4.placeholder).and("have.not.attr", "required")
+        for (let i = 0; i < allInfo.length; i++) {
+            if (allInfo[i].name === "Email *") {
+                cy.get(".field").contains(allInfo[i].name).should("have.text", allInfo[i].name)
+                cy.get(".field").contains(allInfo[i].name).next().children()
+                    .should("be.visible").and("have.attr", "placeholder", allInfo[i].placeholder).and("have.attr", "required")
+            }
+            else {
+                cy.get(".field").contains(allInfo[i].name).should("have.text", allInfo[i].name)
+                cy.get(".field").contains(allInfo[i].name).next().children()
+                    .should("be.visible").and("have.attr", "placeholder", allInfo[i].placeholder).and("have.not.attr", "required")
+            }
+        }
     })
+
+
     it("Validate the Consent checkbox", () => {
         cy.visit("https://techglobal-training.com/frontend/project-1")
         cy.get(".checkbox").should("have.text", " I give my consent to be contacted.").children()
